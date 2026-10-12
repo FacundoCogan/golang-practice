@@ -30,8 +30,8 @@ type outputtable interface {
 
 func main() {
 
-	result := add(1, 2)
-	fmt.Println(result)
+	// result := add(1, 2)    Funcion generica 
+	// fmt.Println(result)
 
 	printSomething(1)
 
@@ -61,9 +61,9 @@ func main() {
 	outputData(userNote)
 }
 
-func add[T int | float64 | string](a, b T) T {
-	return a + b
-}
+// func add[T int | float64 | string](a, b T) T {         Funcion generica que identifica el tipo de retorno 
+// 	return a + b                                          cuando se llama a la funcion add.
+// }
 
 func printSomething(value any) {
 	intVal, ok := value.(int)
