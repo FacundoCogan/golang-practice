@@ -1,26 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"example.com/price-calculator/filemanager"
+	"example.com/price-calculator/prices"
+)
 
 func main() {
-	prices := []float64{10, 20, 30}
+
 	taxRates := []float64{0, 0.07, 0.1, 0.15}
 
-	result := make(map[float64][]float64) // el make crea mapa vacío
-
 	for _, taxRate := range taxRates {
+		fm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
+		// cmd := cmdmanager.New()
+		priceJob := prices.NewTaxIncludedPriceJob(fm, taxRate)
+		err := priceJob.Process()
 
-		taxIncludedPrices := make([]float64, len(prices))
-
-		for priceIndex, price := range prices {
-
-			taxIncludedPrices[priceIndex] = price * (1 + taxRate)
-
+		if err != nil {
+			fmt.Println("Could not process job")
+			fmt.Println(err)
 		}
-
-		result[taxRate] = taxIncludedPrices
 	}
-
-	fmt.Println(result)
 
 }
